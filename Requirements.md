@@ -3,7 +3,7 @@
 **Project Title:** SmartStay – Apartment Booking Web Application  
 **Project Duration:** 1 Week  
 **Prepared For:** Soliton Organization  
-**Prepared By:** Project Team (VeerandraPrasath, Shriram, Vasanthakumar, Prabhakaran)  
+**Prepared By:** Project Team [VeerandraPrasath(PE), Shriram(PE), Vasanthakumar(LSE), Prabhakaran(PM)]  
 **Date:** 16.7.2025
 
 ---
