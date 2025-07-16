@@ -1,6 +1,6 @@
-# Requirements Specification Document
+Ôªø# Requirements Specification Document
 
-**Project Title:** SmartStay ñ Apartment Booking Web Application  
+**Project Title:** SmartStay ‚Äì Apartment Booking Web Application  
 **Project Duration:** 1 Week  
 **Prepared For:** Soliton Organization  
 **Prepared By:** Project Team (VeerandraPrasath, Shriram, Vasanthakumar, Prabhakaran)  
@@ -46,15 +46,15 @@ The **SmartStay** application is a web-based apartment booking system developed 
 
 2. **Team Bookings**:
    - Users can select **"Book for Team"** option.
-   - They can input the **number of team members** and select their names from a list.
+   - They can add the **team members**  from a list.
    - A group request will be sent for room allocation.
 
 3. **Handling Unavailability**:
    - If no rooms are available (individual or team request), show the message:  
-     > ìCurrently No apartments availableî
+     > ‚ÄúCurrently No apartments available‚Äù
    - However, users can still submit the request. Admins may later handle it manually.
    - If rejected due to unavailability, the admin can add custom remarks such as:  
-     > ìAll rooms are unavailableî  
+     > ‚ÄúAll rooms are unavailable‚Äù  
      Users will be notified via email.
 
 ---
@@ -73,15 +73,22 @@ The **SmartStay** application is a web-based apartment booking system developed 
    - If booking is gender-specific, only rooms with **matching gender occupants** should be shown.
    - Opposite genders **must not** be assigned to the same flat.
 
+   #### Role-Based Allocation Logic:
+   - **Managers, Above Managers, or Equivalent Roles** ‚Üí Allocate entire **flat**.
+   - **Seniors, Leads, or Equivalent Until Manager** ‚Üí Allocate entire **room**.
+   - **Juniors (Project Engineers, Above PE Until Senior)** ‚Üí Allocate specific **bed** in a room.
+   - Allocation UI should filter and guide the admin based on the user‚Äôs role.
+
 3. **Team Allocation**:
    - For team bookings, the admin should select and assign rooms for each team member individually.
    - The same gender restriction applies to group assignments.
+   - Role-based rules apply to each team member as per point 2 above.
 
 4. **Email Notifications**:
    - On acceptance and allocation:  
-     > ìYou are allocated to **[Room X]** of **[Apartment Y]**î
+     > ‚ÄúYou are allocated to **[Room X]** of **[Flat Y]** in **[Apartment Z]**‚Äù
    - On rejection:  
-     > ìThere is no availability of roomsî
+     > ‚ÄúSorry ! There is no availability of rooms‚Äù
 
 5. **Apartment Data Import**:
    - Admins can import apartment structure via an **Excel sheet**.
@@ -108,20 +115,33 @@ The **SmartStay** application is a web-based apartment booking system developed 
 
 8. **Export History**:
    - Admin can export the **stay history** of all users as an **Excel report**.
-
----
+----
 
 ## 6. Non-Functional Requirements
 
-- **Authentication**: Must be fully secure and compliant with Soliton Organizationís identity management.
+- **Authentication**: Must be fully secure and compliant with Soliton Organization‚Äôs identity management.
 - **Responsiveness**: The web application should be accessible on desktop and mobile devices.
 - **Scalability**: The architecture must support easy scaling for additional apartments or cities.
 - **Maintainability**: The system must support easy import/export and minimal manual configurations.
 - **Auditability**: All booking and allocation actions should be recorded for auditing.
 
 ---
+## 7. Feature Classification: Negotiable vs Non-Negotiable
 
-## 7. Future Scope (Optional Enhancements)
+### Non-Negotiable Features (Must-Have)
+- SSO login for X Organization employees only
+- User booking for individual and team with date/time selection
+- Admin approval/rejection workflow with email notifications
+- Role-based room allocation (Flat/Room/Bed based on employee designation)
+- Gender-based room restrictions
+- Live apartment status dashboard for admin
+- Manual apartment structure creation (via form)
+- History export of occupants via Excel
+- "No availability" request fallback with user-visible messages
 
-- Automatic assignment suggestions based on preferences or patterns.
-- Notifications via Teams in addition to email.
+### Negotiable Features (Nice-to-Have / Can be deferred)
+- UI enhancements for drag-and-drop room allocation
+- Notification via Microsoft Teams (in addition to email)
+- Automatic allocation recommendations
+- Apartment structure import via Excel
+- Role-based visual color coding in UI
