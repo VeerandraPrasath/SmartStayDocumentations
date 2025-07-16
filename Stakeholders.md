@@ -23,7 +23,7 @@
 
 ### Primary Flow:
 
-- **Developers** report progress, issues, and blockers to the **Team Lead (Va)**.
+- **Developers** report progress, issues, and blockers to the **Team Lead**.
 - **Team Lead**:
   - Guides the development team technically.
   - Coordinates requirement clarifications with the **Client**.
