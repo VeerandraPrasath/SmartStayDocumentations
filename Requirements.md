@@ -10,7 +10,7 @@
 
 ## 1. Overview
 
-The **SmartStay** application is a web-based apartment booking system developed for internal use within **Soliton Organization**. It consists of two main modules: the **User Module** and the **Admin Module**, and will support seamless booking and management of apartment spaces for employees using **Single Sign-On (SSO)**.
+The **SmartStay** application is a web based apartment booking system developed for Internal use within Soliton Organization.This application contains two major module.User module and Admin module.The user module .These modules helps to book apartments seamlessly using Single Sign-On
 
 ---
 
@@ -18,9 +18,9 @@ The **SmartStay** application is a web-based apartment booking system developed 
 
 | Module        | Description                                                                 |
 |---------------|-----------------------------------------------------------------------------|
-| Login Module  | Handles authentication and user data retrieval using SSO                    |
-| User Module   | Allows employees to request or book apartments for themselves or their team |
-| Admin Module  | Enables admins to manage bookings, allocate rooms, and monitor availability |
+| Login Module  | Handles authentication and get data of user using SSO                    |
+| User Module   | Allows employees to make request to book apartments for individual as well as for team  |
+| Admin Module  | Used to handle the raised request,allocate apartments ,check availability and export history |
 
 ---
 
@@ -28,11 +28,11 @@ The **SmartStay** application is a web-based apartment booking system developed 
 
 ### Functional Requirements:
 1. **Restricted Access**:  
-   Only users belonging to **Soliton Organization** should be allowed to log in to the application.
+  Only user belongs to Soliton Organization can access the application.
 
 2. **SSO Integration**:  
-   - Authentication must be handled via **Single Sign-On (SSO)**, following the same model as used in SIM.
-   - Upon successful login, user information (e.g., name, email, job title) should be retrieved from the SSO provider.
+   - Authentication must be done using Single Sign-On(SSO) with Soliton Organization’s identity management system same as the SIM.
+   - On Successful login,the details of the User are fetched from the SSO provider and store in the database.
 
 ---
 
@@ -41,8 +41,10 @@ The **SmartStay** application is a web-based apartment booking system developed 
 ### Functional Requirements:
 
 1. **Booking Requests**:
-   - Users can select **From** and **To** dates along with **Check-In** and **Check-Out** times.
-   - A request is raised to the admin if rooms are available for the selected period.
+   - User can select the **From** date and **To** date along with the **Checkin** and **Checkout** time.
+   - User can only able to book room maximum of 14 days.
+   - Request can be made for **individual** or **team** bookings.
+   - Request can only made if there is an available room for the selected date and time.
 
 2. **Team Bookings**:
    - Users can select **"Book for Team"** option.
@@ -50,12 +52,11 @@ The **SmartStay** application is a web-based apartment booking system developed 
    - A group request will be sent for room allocation.
 
 3. **Handling Unavailability**:
-   - If no rooms are available (individual or team request), show the message:  
+   - If no rooms are available (individual or team request), send mail to the requested user with message:  
      > “Currently No apartments available”
-   - However, users can still submit the request. Admins may later handle it manually.
-   - If rejected due to unavailability, the admin can add custom remarks such as:  
+   - However,there is no availability of rooms, users can still able to make a request. Admins will handle it manually.
+   - If the request is rejected due to unavailability, the admin can add custom remarks in the mail such as:  
      > “All rooms are unavailable”  
-     Users will be notified via email.
 
 ---
 
@@ -64,44 +65,34 @@ The **SmartStay** application is a web-based apartment booking system developed 
 ### Functional Requirements:
 
 1. **Request Management**:
-   - Admins can **accept** or **reject** booking requests.
-   - Remarks can be added while accepting/rejecting the requests.
+   - Admins can accept or reject booking requests.
+   - Remarks can be added during accepting/rejecting the requests.
 
 2. **Room Allocation**:
-   - Admins manually allocate rooms to approved requests.
-   - Only **available** rooms should be shown during allocation (booked rooms should be hidden).
-   - If booking is gender-specific, only rooms with **matching gender occupants** should be shown.
-   - Opposite genders **must not** be assigned to the same flat.
+   - Admin will manually allocate the rooms to approved requests.
+   - Only available rooms should be shown while allocating (booked rooms should be hidden).
+   - All the booking request are gender-specific, only rooms with **matching gender occupants** should be shown.
+   - Opposite genders must not be assigned to the same flat.
 
    #### Role-Based Allocation Logic:
-   - **Managers, Above Managers, or Equivalent Roles** → Allocate entire **flat**.
-   - **Seniors, Leads, or Equivalent Until Manager** → Allocate entire **room**.
-   - **Juniors (Project Engineers, Above PE Until Senior)** → Allocate specific **bed** in a room.
-   - Allocation UI should filter and guide the admin based on the user’s role.
+   - Managers, Above Managers, or Equivalent Roles → Allocate entire flat.
+   - Seniors, Leads, or Equivalent Until Manager → Allocate entire room.
+   - Juniors (Project Engineers, Above PE Until Senior) → Allocate specific bed in a room.
 
 3. **Team Allocation**:
    - For team bookings, the admin should select and assign rooms for each team member individually.
-   - The same gender restriction applies to group assignments.
-   - Role-based rules apply to each team member as per point 2 above.
+   - The same gender restriction applies to group assignments also.
+   - Role-based room allocation rules are applied to each team member.
 
 4. **Email Notifications**:
-   - On acceptance and allocation:  
+   - Once the request is accepted and room is allocated:  
      > “You are allocated to **[Room X]** of **[Flat Y]** in **[Apartment Z]**”
-   - On rejection:  
+   - Once the request is rejected:  
      > “Sorry ! There is no availability of rooms”
 
-5. **Apartment Data Import**:
-   - Admins can import apartment structure via an **Excel sheet**.
-   - Excel should support loading of:
-     - City
-     - Apartment
-     - Flat
-     - Room
-     - Bed
-
-6. **Manual Apartment Creation**:
-   - Admins can manually add new apartments through a form.
-   - The form must allow input for:
+5. **Manual Apartment Creation**:
+   - Admins can manually add new apartments.
+   - The details required to add new apartment are:
      - Apartment name
      - Number of flats
      - Flat names
@@ -109,35 +100,33 @@ The **SmartStay** application is a web-based apartment booking system developed 
      - Number of beds in each room
 
 7. **Live Apartment Status View**:
-   - Admin can view the **current status** of all apartments, including:
-     - Booked status and assigned user
+   - Admin can view the current status of all the apartments, including:
+     - Unavailable rooms with assigned user
      - Available rooms
 
 8. **Export History**:
-   - Admin can export the **stay history** of all users as an **Excel report**.
+   - Admin can export the stay history as  Excel report.
 ----
 
 ## 6. Non-Functional Requirements
 
-- **Authentication**: Must be fully secure and compliant with Soliton Organization’s identity management.
-- **Responsiveness**: The web application should be accessible on desktop and mobile devices.
-- **Scalability**: The architecture must support easy scaling for additional apartments or cities.
-- **Maintainability**: The system must support easy import/export and minimal manual configurations.
-- **Auditability**: All booking and allocation actions should be recorded for auditing.
+- **Authentication**: Must be fully secure and compatible with Soliton Organization’s identity management.
+- **Responsiveness**: The web application should be accessible through desktop and also in mobile devices.
+- **Scalability**: The architecture must support scaling for adding apartments or cities in the future.
+- **Auditability**: All booking and allocation items should be logged.
 
 ---
 ## 7. Feature Classification: Negotiable vs Non-Negotiable
 
 ### Non-Negotiable Features (Must-Have)
-- SSO login for X Organization employees only
+- SSO login for Soliton Organization employees only
 - User booking for individual and team with date/time selection
 - Admin approval/rejection workflow with email notifications
 - Role-based room allocation (Flat/Room/Bed based on employee designation)
 - Gender-based room restrictions
 - Live apartment status dashboard for admin
-- Manual apartment structure creation (via form)
+- Manual apartment structure creation 
 - History export of occupants via Excel
-- "No availability" request fallback with user-visible messages
 
 ### Negotiable Features (Nice-to-Have / Can be deferred)
 - UI enhancements for drag-and-drop room allocation
