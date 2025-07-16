@@ -145,3 +145,5 @@ The **SmartStay** application is a web-based apartment booking system developed 
 - Automatic allocation recommendations
 - Apartment structure import via Excel
 - Role-based visual color coding in UI
+
+----
