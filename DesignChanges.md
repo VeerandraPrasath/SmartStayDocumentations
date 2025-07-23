@@ -48,7 +48,8 @@ This document shows the  changes made to the Apartment Booking application's exi
 
 ### User Booking View:
 
-<img width="6162" height="3672" alt="image (3)" src="https://github.com/user-attachments/assets/fa48e777-475d-473b-918d-8ce4a6dbaff8" />
+<img width="6746" height="3672" alt="image (6)" src="https://github.com/user-attachments/assets/be53c81a-24be-4dc6-bae2-58ae7a6884c7" />
+
 
 ### View Pending Request
 <img width="6162" height="3672" alt="image (3)" src="https://github.com/user-attachments/assets/7b5781d3-83dc-451c-844a-b490c3daa2a4" />
