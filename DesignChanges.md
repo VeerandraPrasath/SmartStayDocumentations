@@ -48,7 +48,17 @@ This document shows the  changes made to the Apartment Booking application's exi
 
 ### User Booking View:
 
-### View Details:
+<img width="6162" height="3672" alt="image (3)" src="https://github.com/user-attachments/assets/fa48e777-475d-473b-918d-8ce4a6dbaff8" />
+
+### View Pending Request
+<img width="6162" height="3672" alt="image (3)" src="https://github.com/user-attachments/assets/7b5781d3-83dc-451c-844a-b490c3daa2a4" />
+
+### View Upcoming Bookings
+<img width="6162" height="3672" alt="image (4)" src="https://github.com/user-attachments/assets/470cf65b-2f11-4bde-b50c-186ceb64596a" />
+
+### View Booking History
+<img width="6162" height="3672" alt="image (5)" src="https://github.com/user-attachments/assets/c2ecbc9b-fd3e-4310-9261-c7394d7cc300" />
+
 
 ##  Design Conflict: CRUD Operation Flow
 
