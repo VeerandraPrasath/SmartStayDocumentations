@@ -2,6 +2,40 @@
 
 ## User Module
 
+### Get Users
+
+Get : /api/users
+
+
+Response :
+
+```json
+[
+    {
+        "id": 1,
+        "name": "Veerandra Prasath",
+        "email": "veerandra.prasath@solitontech.com",
+        "role": "project engineer",
+        "gender": "male"
+    },
+    {
+        "id": 2,
+        "name": "Shri Ram",
+        "email": "shriram.saravanan@solitontech.com",
+        "role": "project engineer",
+        "gender": "male"
+    },
+    {
+        "id": 3,
+        "name": "shruthi",
+        "email": "shruthi.akka@solitontech.com",
+        "role": "senior project engineer",
+        "gender": "female"
+    }
+]
+```
+
+
 ### Create Booking
 
 **POST : http://localhost:5001/api/bookings**
@@ -450,6 +484,120 @@ Response:
             ]
         }
     ]
+}
+```
+
+### Approve Request :
+
+Post : /api/requests/{requestId}/approve
+
+Body:
+```JSON
+{
+  "remarks": "Approved for engineering offsite",  // optional
+  "allocatedAccommodation": [
+    {
+      "bookingMemberId": 789,
+      "assignedAccommodation": {
+        "apartmentId": 1,
+        "flatId": 101,
+        "roomId": 5,
+        "bedId": 12
+      }
+    },
+    {
+      "bookingMemberId": 790,
+      "assignedAccommodation": {
+        "apartmentId": 1,
+        "flatId": 101,
+        "roomId": 5
+      }
+    }
+  ]
+}
+```
+
+Response :
+
+```JSON
+{
+  "success": true,
+  "message": "Request approved successfully",
+  "data": {
+    "requestId": 456,
+    "processedAt": "2023-08-15T14:30:22Z",
+    "assignedCount": 2
+  }
+}
+```
+
+Error response :
+
+Invalid Request (400 Bad Request)
+
+```json
+{
+  "success": false,
+  "message": "Invalid booking member assignments"
+}
+```
+Request Not Found (404 Not Found)
+
+```json
+{
+  "success": false,
+  "message": "Request not found"
+}
+```
+Conflict - Already Processed (409 Conflict)
+
+```json
+{
+  "success": false,
+  "message": "Request already processed"
+}
+```
+Conflict - Accommodation Taken (409 Conflict)
+
+```json
+{
+  "success": false,
+  "message": "Accommodation already assigned to another request"
+}
+```
+Server Error (500 Internal Server Error)
+
+```json
+{
+  "success": false,
+  "message": "Internal server error while processing request",
+  "error": "Database connection timeout" // Only shown in development
+}
+```
+
+### Reject Request:
+
+**Post : /api/requests/{requestId}/reject**
+
+Body :
+```JSON
+{
+  "remarks": "Rejected due to insufficient availability during requested dates"
+}
+```
+
+Response :
+
+
+```JSON
+{
+  "success": true,
+  "message": "Request rejected successfully",
+  "data": {
+    "requestId": 456,
+    "processedAt": "2023-08-15T15:22:10Z",
+    "remarks": "Rejected due to insufficient availability"
+  }
 }
 ```
 
