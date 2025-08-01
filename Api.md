@@ -328,7 +328,130 @@ Response:
     ]
 }
 ```
+### Get availability by city (this is for the drop down)
 
+
+
+**POST : http://localhost:5001/api/availability/city/{cityId}**
+
+Body :
+```JSON
+{
+  "DATES": [
+    {
+      "checkIn": "2023-08-01T14:00:00Z",
+      "checkOut": "2023-08-05T10:00:00Z"
+    },
+    {
+      "checkIn": "2023-08-10T14:00:00Z",
+      "checkOut": "2023-08-15T10:00:00Z"
+    }
+  ]
+}
+```
+Response:
+```JSON
+{
+    "cityId": 1,
+    "cityName": "Madurai",
+    "data": [
+        {
+            "checkIn": "2025-08-30T09:00:00",
+            "checkOut": "2025-08-30T18:00:00",
+            "apartmentsStatus": [
+                {
+                    "id": 1,
+                    "name": "Apt1",
+                    "flats": [
+                        {
+                            "id": 1,
+                            "name": "F1",
+                            "isAvailable": true,
+                            "gender": null,
+                            "rooms": [
+                                {
+                                    "id": 3,
+                                    "name": "R1",
+                                    "isAvailable": true,
+                                    "beds": [
+                                        {
+                                            "id": 3,
+                                            "name": "Bed 1",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 4,
+                                            "name": "Bed 2",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 5,
+                                            "name": "Bed 3",
+                                            "isAvailable": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "name": "F2",
+                            "isAvailable": true,
+                            "gender": null,
+                            "rooms": [
+                                {
+                                    "id": 4,
+                                    "name": "R1",
+                                    "isAvailable": true,
+                                    "beds": [
+                                        {
+                                            "id": 6,
+                                            "name": "Bed 1",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 7,
+                                            "name": "Bed 2",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 8,
+                                            "name": "Bed 3",
+                                            "isAvailable": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 5,
+                                    "name": "R2",
+                                    "isAvailable": true,
+                                    "beds": [
+                                        {
+                                            "id": 9,
+                                            "name": "Bed 1",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 10,
+                                            "name": "Bed 3",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 11,
+                                            "name": "Bed 2",
+                                            "isAvailable": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
 
 
 
