@@ -600,8 +600,148 @@ Response :
   }
 }
 ```
+### Get Occupancy 
 
+Post:/api/occupancy?city=1&apartment=1
 
+Body :
+```json
+
+{
+      "checkIn": "2025-07-30T09:00:00Z",
+      "checkOut": "2025-07-30T18:00:00Z"
+}
+
+```
+
+Response : 
+
+```json
+{
+    "success": true,
+    "data": {
+        "period": {
+            "checkInTime": "2025-07-30T09:00:00Z",
+            "checkOutTime": "2025-07-30T18:00:00Z"
+        },
+        "filtersApplied": {
+            "city": "1",
+            "apartment": "1",
+            "status": "all"
+        },
+        "stats": {
+            "totalBeds": 3,
+            "occupied": 2,
+            "vacant": 1,
+            "filteredBeds": 3
+        },
+        "beds": [
+            {
+                "bed": {
+                    "id": 3,
+                    "name": "Bed 1",
+                    "status": "occupied",
+                    "occupiedBy": {
+                        "user": {
+                            "id": 2,
+                            "name": "Shri Ram",
+                            "email": "shriram.saravanan@solitontech.com",
+                            "role": "project engineer",
+                            "gender": "male"
+                        },
+                        "period": {
+                            "checkInTime": "2025-07-30T09:00:00",
+                            "checkOutTime": "2025-07-30T18:00:00"
+                        }
+                    }
+                },
+                "location": {
+                    "room": {
+                        "id": 3,
+                        "name": "R1"
+                    },
+                    "flat": {
+                        "id": 1,
+                        "name": "F1"
+                    },
+                    "apartment": {
+                        "id": 1,
+                        "name": "Apt1"
+                    },
+                    "city": {
+                        "id": 1,
+                        "name": "Madurai"
+                    }
+                }
+            },
+            {
+                "bed": {
+                    "id": 4,
+                    "name": "Bed 2",
+                    "status": "vacant",
+                    "occupiedBy": null
+                },
+                "location": {
+                    "room": {
+                        "id": 3,
+                        "name": "R1"
+                    },
+                    "flat": {
+                        "id": 1,
+                        "name": "F1"
+                    },
+                    "apartment": {
+                        "id": 1,
+                        "name": "Apt1"
+                    },
+                    "city": {
+                        "id": 1,
+                        "name": "Madurai"
+                    }
+                }
+            },
+            {
+                "bed": {
+                    "id": 6,
+                    "name": "Bed 1",
+                    "status": "occupied",
+                    "occupiedBy": {
+                        "user": {
+                            "id": 3,
+                            "name": "shruthi",
+                            "email": "shruthi.akka@solitontech.com",
+                            "role": "senior project engineer",
+                            "gender": "female"
+                        },
+                        "period": {
+                            "checkInTime": "2025-07-30T09:00:00",
+                            "checkOutTime": "2025-07-30T18:00:00"
+                        }
+                    }
+                },
+                "location": {
+                    "room": {
+                        "id": 4,
+                        "name": "R1"
+                    },
+                    "flat": {
+                        "id": 2,
+                        "name": "F2"
+                    },
+                    "apartment": {
+                        "id": 1,
+                        "name": "Apt1"
+                    },
+                    "city": {
+                        "id": 1,
+                        "name": "Madurai"
+                    }
+                }
+            }
+        ]
+    }
+}
+```
 
 
 
