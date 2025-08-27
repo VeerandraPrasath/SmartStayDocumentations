@@ -1,5 +1,92 @@
 # Smart Booking Api
 
+## Login Module
+
+**Login User**
+
+Step 1 : `Get : /auth/url`
+
+Response :
+
+```json
+{
+    "url": "https://login.microsoftonline.com/06ed72e8-a419-4795-9eb3-5512cf1d3d98/oauth2/v2.0/authorize?client_id=a69198cc-ed8e-42b8-92cc-1f0661506816&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5001%2Fauth%2Fcallback&response_mode=query&scope=openid profile email User.Read"
+}
+```
+
+Step 2 : Redirect to the above url and login with your MS credentials .Its will provide a code .
+
+```json
+
+{"code":"1.AVMA6HLtBhmklUees1USzx09mMyYkaaO7bhCkswfBmFQaBbFANVTAA.AgABBAIAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P_Y8lQqZ6KYU64dbzXopg1_tpucgIQMeJEcBecvtcnUgznJWc96Y3dbDI1ZzcR4NrzS7DbakHDmDqZCBef04XYD_4auvZrQ3i8PdhtFJzETuTbOtSzXFKfKJUfXwNGlWhIq-pTKgibiqhBzC4notTjxav-ysbfaL0AXQf215yaq4ptuHPwr1eJ6fnk-vNZMMxwE-Zca5jlmkb3Nz1MXW6-r_yOdGNftr9udRjgEYgf2FT7lKm3Lvu5Ecg7u7twQGKWRRbHtVwZvcmGf212e-w-grQY0QSGV6B46xx5etWDeYMbEW72cPYhKY1OfvHn0YzITWZ6Pg-uq1l6pKoDakasBJbOQXZaOsKtZpSGNknlwc7dfNYgigjApRCWo7Ds1ginKpdXaRCQbqOK2BvmxEJ22PqpcNS4jYu2zZ7TUitK9nVJa62l-DQ2SV2YrQNSy5nWdcoZOOVD6-4KH9S5NpmLCKgZBW1LNtXj8MiDgzLeMx9EcC1JIKA-9Xx0qPGoZu9RjlKaBMEYQozZLGlGhlg52drvuaNQWVqod0SfkNqXpEG70b7ayEBhmbLtQ2OsK_LgibozhtP9c6JGE3CBZe2Xi7kLk1vYU_h4smWS-GcolHy6bA09uXcrsrgJfusT3t4PmJZwZ_52U81SRGuKeONzezMt6_XshwCGvUq1WtofIsp_znGtYRUNhSqHu9vP4xUQ3KVuFbqbKCaInWp5EOAP3pkU6yjD6TpIKgd8-mv_K48j7VNDfrsRQx1EVyefUM1Zf2lUGX4IITcGRfVibZ7sSg4b2XlVTDz_WX8okmjSGlFUxBiJa3IDwSZTT1FDuSUg_4_G4GTez8-RWTE8bvpN8k-C8psDd_BgMwrD3qj1PKIq1q8EgAADPpLeIW6TOiSUoe0dcrMvjI8cEPGBgqDJmxNHVqcFQ1rTIBPULMdgIbJiTRbOR_Y-q68T8DVmzwbXIoGF0"}
+
+```
+
+Note : The  code is valid for only 5 minutes and can be redeem  only once .So use is wisely to get the access token .
+
+Step 3 : `Post : /login`
+
+Body 
+
+```json
+
+{"code":"1.AVMA6HLtBhmklUees1USzx09mMyYkaaO7bhCkswfBmFQaBbFANVTAA.AgABBAIAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P_Y8lQqZ6KYU64dbzXopg1_tpucgIQMeJEcBecvtcnUgznJWc96Y3dbDI1ZzcR4NrzS7DbakHDmDqZCBef04XYD_4auvZrQ3i8PdhtFJzETuTbOtSzXFKfKJUfXwNGlWhIq-pTKgibiqhBzC4notTjxav-ysbfaL0AXQf215yaq4ptuHPwr1eJ6fnk-vNZMMxwE-Zca5jlmkb3Nz1MXW6-r_yOdGNftr9udRjgEYgf2FT7lKm3Lvu5Ecg7u7twQGKWRRbHtVwZvcmGf212e-w-grQY0QSGV6B46xx5etWDeYMbEW72cPYhKY1OfvHn0YzITWZ6Pg-uq1l6pKoDakasBJbOQXZaOsKtZpSGNknlwc7dfNYgigjApRCWo7Ds1ginKpdXaRCQbqOK2BvmxEJ22PqpcNS4jYu2zZ7TUitK9nVJa62l-DQ2SV2YrQNSy5nWdcoZOOVD6-4KH9S5NpmLCKgZBW1LNtXj8MiDgzLeMx9EcC1JIKA-9Xx0qPGoZu9RjlKaBMEYQozZLGlGhlg52drvuaNQWVqod0SfkNqXpEG70b7ayEBhmbLtQ2OsK_LgibozhtP9c6JGE3CBZe2Xi7kLk1vYU_h4smWS-GcolHy6bA09uXcrsrgJfusT3t4PmJZwZ_52U81SRGuKeONzezMt6_XshwCGvUq1WtofIsp_znGtYRUNhSqHu9vP4xUQ3KVuFbqbKCaInWp5EOAP3pkU6yjD6TpIKgd8-mv_K48j7VNDfrsRQx1EVyefUM1Zf2lUGX4IITcGRfVibZ7sSg4b2XlVTDz_WX8okmjSGlFUxBiJa3IDwSZTT1FDuSUg_4_G4GTez8-RWTE8bvpN8k-C8psDd_BgMwrD3qj1PKIq1q8EgAADPpLeIW6TOiSUoe0dcrMvjI8cEPGBgqDJmxNHVqcFQ1rTIBPULMdgIbJiTRbOR_Y-q68T8DVmzwbXIoGF0"}
+
+```
+
+Response :
+
+```
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ2ZWVyYW5kcmEucHJhc2F0aEBzb2xpdG9udGVjaC5jb20iLCJuYW1lIjoiVmVlcmFuZHJhIFByYXNhdGgiLCJyb2xlIjoiUHJvamVjdCBFbmdpbmVlciIsImFjY2VzcyI6InVzZXIiLCJpYXQiOjE3NTYzMDU5NzQsImV4cCI6MTc1NjM5MjM3NH0.4xUdSi-S1yroV9j181qsCIPo8t42FiS_unCf02y0e1A",
+    "user": {
+        "id": 2,
+        "name": "Veerandra Prasath",
+        "email": "veerandra.prasath@solitontech.com",
+        "role": "Project Engineer",
+        "accessLevel": "user",
+        "gender": null
+    }
+}
+
+```
+This token is valid upto 24 hr from the time of generation.
+
+Note : 
+
+
+Also the user will be created automatically in the database when he login for the first time with default user access level.
+But after that we need to update the gender of the user using the following endpoint.
+
+**Update user gender**
+`Patch : /api/users/{userId}/gender`
+
+Body
+
+```
+{
+  "gender": "male"
+}
+```
+
+Response :
+
+```
+{
+    "success": true,
+    "message": "User gender updated successfully",
+    "data": {
+        "id": 2,
+        "name": "Veerandra Prasath",
+        "email": "veerandra.prasath@solitontech.com",
+        "gender": "male",
+        "role": "Project Engineer",
+        "access": "user"
+    }
+}
+```
+
 ## User Module
 
 ### Booking Page
@@ -1662,6 +1749,287 @@ If a bed is assigned to a person means ,the response will be like the below
 }
 ```
 
+## Before testing all the endpoints  please login once and create atleast one City , apartment ,flat,room and bed for testing purpose.
+
+
+### Admin Setup (Create City, Apartment, Flat, Room)
+
+
+**Create Entire hierarchy in one request**
+
+`Post : /api/accommodation`
+
+Body :
+```json
+{
+  "cityData": { "name": "New York" },
+  "apartmentData": { "name": "Sky Tower", "google_map_link": "https://maps.example.com/skytower" },
+  "flatData": { "name": "Floor 5" },
+  "roomData": { "name": "Room 501" },
+  "bedsData": [
+    { "name": "Bed A" },
+    { "name": "Bed B" }
+  ]
+}
+```
+Response :
+```json
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "cityId": 2,
+        "apartmentId": 2,
+        "flatId": 2,
+        "roomId": 3,
+        "beds": [
+            {
+                "id": 7,
+                "name": "Bed A",
+                "room_id": 3
+            },
+            {
+                "id": 8,
+                "name": "Bed B",
+                "room_id": 3
+            }
+        ]
+    }
+}
+```
+
+**Create from the Apartment Level**
+
+Body
+
+```
+{
+  "apartmentData": { "name": "Ocean View", "city_id": 2 },
+  "flatData": { "name": "Ground Floor" },
+  "roomData": { "name": "Room 101" },
+  "bedsData": [
+    { "name": "Single Bed" }
+  ]
+}
+```
+Response
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "apartmentId": 3,
+        "flatId": 3,
+        "roomId": 4,
+        "beds": [
+            {
+                "id": 9,
+                "name": "Single Bed",
+                "room_id": 4
+            }
+        ]
+    }
+}
+```
+
+**Create from the flat level**
+
+Body
+```
+{
+  "flatData": { "name": "First Floor", "apartment_id": 3 },
+  "roomData": { "name": "Room 102" },
+  "bedsData": [
+    { "name": "Bed 1" },
+    { "name": "Bed 2" }
+  ]
+}
+```
+Response
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "flatId": 4,
+        "roomId": 5,
+        "beds": [
+            {
+                "id": 10,
+                "name": "Bed 1",
+                "room_id": 5
+            },
+            {
+                "id": 11,
+                "name": "Bed 2",
+                "room_id": 5
+            }
+        ]
+    }
+}
+```
+
+**Create from the room level**
+
+Body
+```
+{
+  "roomData": { "name": "Suite Room", "flat_id": 4},
+  "bedsData": [
+    { "name": "King Bed" }
+  ]
+}
+```
+
+Response
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "roomId": 6,
+        "beds": [
+            {
+                "id": 12,
+                "name": "King Bed",
+                "room_id": 6
+            }
+        ]
+    }
+}
+```
+
+**Create from the bed level**
+Body
+```
+{
+  "bedsData": [
+    { "name": "Extra Bed 1", "room_id": 6 },
+    { "name": "Extra Bed 2", "room_id": 6 }
+  ]
+}
+```
+Response
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "beds": [
+            {
+                "id": 13,
+                "name": "Extra Bed 1",
+                "room_id": 6
+            },
+            {
+                "id": 14,
+                "name": "Extra Bed 2",
+                "room_id": 6
+            }
+        ]
+    }
+}
+
+```
 
 
 
+**Create City:**
+
+**POST : /api/cities**
+
+Body :
+```json
+{
+  "name": "Madurai"
+}
+```
+
+Response :
+```
+{
+    "success": true,
+    "city": {
+        "id": 1,
+        "name": "Madurai"
+    }
+}
+```
+
+
+**Create Apartment:**
+
+**POST : /api/apartments**
+
+Body :
+```json
+{
+  "name": "Apt1",
+  "cityId": 1,
+  "googleMapLink": "https://..."
+}
+
+```
+Response :
+
+```
+{
+    "success": true,
+    "apartment": {
+        "id": 1,
+        "name": "Apt1",
+        "city_id": 1,
+        "google_map_link": "https://..."
+    }
+}
+```
+
+**Create Flat:**
+
+**Post : /api/flats**
+
+BODY :
+
+```
+{ "name": "F1", "apartment_id": 1 }
+```
+
+Response :
+```
+{
+    "success": true,
+    "flat": {
+        "id": 1,
+        "name": "F1",
+        "apartment_id": 1
+    }
+}
+```
+
+**Create Room:**
+
+**POST : /api/rooms**
+
+Body :
+
+```
+{ "name": "R1", "flat_id": 1, "beds": 3 }
+```
+
+Response :
+```
+{
+    "success": true,
+    "room": {
+        "id": 2,
+        "name": "R1",
+        "flat_id": 1,
+        "beds": 3
+    }
+}
+```
+
+
+Note : 
+
+This room creating request will also create the number of beds mentioned in the request.
