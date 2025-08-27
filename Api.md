@@ -319,7 +319,7 @@ Response :
 
 ### User Booking History Page
 
-**GET :/api/bookings/history/user/{userId}**
+**GET :api/bookings/history/user/{userId}**
 
 Response :
 ```
@@ -374,6 +374,8 @@ Response :
 
 **HTTP : http://localhost:5001/api/bookings/history?city=1&status=pending&checkIn=2025-07-30T02:35:00.000Z&checkOut=2025-07-30T12:40:00.000Z&role=project engineer**
 
+- The response has all the user's history .Each request has it own status and every booking member of the request also have their individual status . 
+
 Response:
 
 ```
@@ -382,26 +384,108 @@ Response:
     "data": [
         {
             "requestId": 2,
-            "city": "Madurai",
-            "requestedBy": {
+            "status": "approved",
+            "processedAt": null,
+            "city": {
+                "id": 1,
+                "name": "Madurai"
+            },
+            "requestedAt": "2025-08-27T09:31:59.049Z",
+            "bookingType": "team",
+            "requestedUser": {
                 "id": 1,
                 "name": "Veerandra Prasath",
-                "email": "veerandra.prasath@solitontech.com",
+                "email": "veerandra.prasath@gmail.com",
                 "role": "project engineer",
                 "gender": "male"
             },
-            "status": "pending",
-            "bookingType": "individual",
-            "processedAt": null,
-            "requestedAt": "2025-07-28T07:31:19.944Z",
             "bookingMembers": [
                 {
-                    "id": 2,
-                    "name": "Shri Ram",
-                    "email": "shriram.saravanan@solitontech.com",
-                    "checkIn": "2025-07-30T03:30:00.000Z",
-                    "checkOut": "2025-07-30T12:30:00.000Z",
-                    "assignedAccommodation": {
+                    "userId": 1,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
+                    "role": "project engineer",
+                    "gender": "male",
+                    "status": "approved",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z",
+                    "accommodation": {
+                        "apartment": {
+                            "id": 1,
+                            "name": "Apt1"
+                        },
+                        "flat": {
+                            "id": 1,
+                            "name": "F1"
+                        },
+                        "room": {
+                            "id": 1,
+                            "name": "R2"
+                        },
+                        "bed": {
+                            "id": 1,
+                            "name": "Bed 1"
+                        }
+                    }
+                },
+                {
+                    "userId": 1,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
+                    "role": "project engineer",
+                    "gender": "male",
+                    "status": "approved",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z",
+                    "accommodation": {
+                        "apartment": {
+                            "id": 1,
+                            "name": "Apt1"
+                        },
+                        "flat": {
+                            "id": 1,
+                            "name": "F1"
+                        },
+                        "room": {
+                            "id": 1,
+                            "name": "R2"
+                        },
+                        "bed": {
+                            "id": 1,
+                            "name": "Bed 1"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "requestId": 1,
+            "status": "cancelled",
+            "processedAt": "2025-08-27T09:18:52.551Z",
+            "city": {
+                "id": 1,
+                "name": "Madurai"
+            },
+            "requestedAt": "2025-08-27T09:17:34.422Z",
+            "bookingType": "individual",
+            "requestedUser": {
+                "id": 1,
+                "name": "Veerandra Prasath",
+                "email": "veerandra.prasath@gmail.com",
+                "role": "project engineer",
+                "gender": "male"
+            },
+            "bookingMembers": [
+                {
+                    "userId": 1,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
+                    "role": "project engineer",
+                    "gender": "male",
+                    "status": "cancelled",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z",
+                    "accommodation": {
                         "apartment": null,
                         "flat": null,
                         "room": null,
