@@ -2,12 +2,14 @@
 
 ## User Module
 
-### Get Users
+### Booking Page
 
-Get : /api/users
+1.**Get all users** 
+
+`get : /api/users`
 
 
-Response :
+**Response**:
 
 ```json
 [
@@ -15,36 +17,23 @@ Response :
         "id": 1,
         "name": "Veerandra Prasath",
         "email": "veerandra.prasath@solitontech.com",
-        "role": "project engineer",
-        "gender": "male"
-    },
-    {
-        "id": 2,
-        "name": "Shri Ram",
-        "email": "shriram.saravanan@solitontech.com",
-        "role": "project engineer",
-        "gender": "male"
-    },
-    {
-        "id": 3,
-        "name": "shruthi",
-        "email": "shruthi.akka@solitontech.com",
-        "role": "senior project engineer",
-        "gender": "female"
+        "role": "Project Engineer",
+        "gender": "male",
+        "access": "user"
     }
 ]
 ```
 
 
-### Create Booking
+**Create Booking**
 
-**POST : http://localhost:5001/api/bookings**
+`POST : /api/bookings`
 
 
 Individual Booking:
 ```JSON
 {
-  "userId": 1,
+  "requesterId": 1,
   "cityId": 1,
   "bookingType": "individual",
   "BookingMembers": [
@@ -59,7 +48,7 @@ Individual Booking:
 Team Booking :
 ```
 {
-  "userId": 1,
+  "requesterId": 1,
   "cityId": 1,
   "bookingType": "team",
   "BookingMembers": [
@@ -75,10 +64,18 @@ Team Booking :
     }
   ]
 }
-```
-### Get Availability
 
-Post : http://localhost:5001/api/availability/check/{cityId}
+```
+
+**Get Availability**
+
+This get availability return the available number of beds for the requested time period which the count is reduced from the number of booking members requested previously for the same overlapping time period.
+
+**For example:**
+
+There are 4 beds available for the time period 9 AM to 6 PM on 30th July 2025.But already 2 members have requested for the same time period, so the available beds will be 2.
+
+**Request** : `Post :/api/availability/check/{cityId}`
 
 Body :
 ```JSON
@@ -90,51 +87,107 @@ Body :
 
 Response :
 
-```
+```JSON
 {
-    "success": true,
-    "availability": {
-        "flat": 1,
-        "room": 2,
-        "bed": 8
-    }
+    "availableBeds": 4
 }
 ```
-### Get User Request
 
-Get :http://localhost:5001/api/requests/user/{userId}
+**Get BookingTypes**
 
-
-
-Note:
-   This user is either the requester or a member of the booking request.It will return all the requests made by the user or the requests in which the user is a member.
+Request : `Get : /api/bookings/bookingTypes`
 
 Response:
 ```
 {
     "success": true,
+    "bookingTypes": [
+        "individual",
+        "team"
+    ]
+}
+```
+
+**Get Cities**
+
+`GET : /api/cities`
+
+Response:
+```
+[
+    {
+        "id": 1,
+        "name": "Madurai"
+    }
+]
+```
+
+--------------------------------
+
+### User pending Page
+
+
+**Get User pending Request**
+
+
+
+Request : `Get : /api/requests/pending/user/{userId}`
+
+
+Response :
+
+```JSON
+{
+    "success": true,
+    "status": "pending",
     "data": [
         {
-            "requestId": 2,
+            "requestId": 5,
             "cityName": "Madurai",
             "bookingType": "individual",
-            "requestedAt": "2025-07-28T07:31:19.944Z",
+            "requestedAt": "2025-08-26T05:22:25.111Z",
+            "remarks": null,
             "requestedUser": {
                 "id": 1,
                 "name": "Veerandra Prasath",
                 "mail": "veerandra.prasath@solitontech.com",
-                "role": "project engineer",
+                "role": "Project Engineer",
                 "gender": "male"
             },
             "bookingMembers": [
                 {
-                    "userId": 2,
-                    "username": "Shri Ram",
-                    "role": "project engineer",
+                    "userId": 1,
+                    "username": "Veerandra Prasath",
+                    "role": "Project Engineer",
                     "gender": "male",
-                    "mail": "shriram.saravanan@solitontech.com",
-                    "checkIn": "2025-07-30T03:30:00.000Z",
-                    "checkOut": "2025-07-30T12:30:00.000Z"
+                    "mail": "veerandra.prasath@solitontech.com",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z"
+                }
+            ]
+        },
+        {
+            "requestId": 4,
+            "cityName": "Madurai",
+            "bookingType": "individual",
+            "requestedAt": "2025-08-25T14:03:50.460Z",
+            "remarks": null,
+            "requestedUser": {
+                "id": 1,
+                "name": "Veerandra Prasath",
+                "mail": "veerandra.prasath@solitontech.com",
+                "role": "Project Engineer",
+                "gender": "male"
+            },
+            "bookingMembers": [
+                {
+                    "userId": 1,
+                    "username": "Veerandra Prasath",
+                    "role": "Project Engineer",
+                    "gender": "male",
+                    "mail": "veerandra.prasath@solitontech.com",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z"
                 }
             ]
         }
@@ -142,27 +195,53 @@ Response:
 }
 ```
 
-### Cancel Request
 
-**DELETE /api/requests/{requestId}/cancel/{userId}**
 
-Note:
+**Cancel Request (Remove the particular user from the request)**
 
-* If requester raising the canecl request, then the request will be cancelled either it is a team or individual.
-* If a member is raising the cancel request for individual type,the request is cancelled.
-* If a member of the team is raising the cancel request,then he is removed from the team booking,else if he is the only member in the team ,then the entire team request is cancelled.
+`Patch : /api/requests/{requestId}/cancel/{userId}`
 
-Response :
+Response 1:(If he is one of the member in the request)
 ```
 {
     "success": true,
-    "message": "Individual request cancelled successfully"
+    "message": "User removed from booking members sucessfully",
+    "deletedRequest": false
 }
 ```
 
-### Get Upcoming Stays
 
-GET  : /api/bookings/user/{userId}
+
+Response 2: (If he is the only member in the request,then the entire request is deleted)
+
+```
+{
+    "success": true,
+    "message": "User removed from booking members and request deleted successfully",
+    "deletedRequest": true
+}
+```
+
+**Cancel entire Request**  ( Delete the entire request .This button option is only displayed to the requester)
+
+Request : `Delete : api/requests/:requestId`
+
+Response :
+
+```
+{
+    "success": true,
+    "message": "Request deleted successfully"
+}
+```
+
+------------
+
+### User  Upcoming  Stays  Page
+
+**User upcoming Booking**
+ 
+`GET  : /api/bookings/upcoming/user/{userId}`
 
 Note :
  * It will not include the currently staying accommodation.
@@ -171,53 +250,58 @@ Note :
 Response:
 ```
 {
-  "success": true,
-  "data": [
-    {
-      "requestId": 123,
-      "cityName": "Madurai",
-      "bookingType": "individual",
-      "requestedAt": "2023-09-01T00:00:00Z",
-      "requestedUser": {
-        "id": 1,
-        "name": "John Doe",
-        "mail": "john@example.com",
-        "role": "user",
-        "gender": "male"
-      },
-      "bookingMembers": [
+    "success": true,
+    "status": "approved",
+    "data": [
         {
-          "userId": 1,
-          "username": "John Doe",
-          "checkIn": "2023-10-15T00:00:00Z",  // Future date
-          "checkOut": "2023-10-20T00:00:00Z",
-          "accommodation": {
-        "apartment": {
-          "id": 1,
-          "name": "Sunrise Apartments"
-        },
-        "flat": {
-          "id": 5,
-          "name": "Flat 101"
-        },
-        "room": {
-          "id": 10,
-          "name": "Room A"
-        },
-        "bed": {
-          "id": 15,
-          "name": "Bed 1"
+            "requestId": 17,
+            "cityName": "Madurai",
+            "bookingType": "individual",
+            "requestedAt": "2025-08-26T07:26:55.284Z",
+            "requestedUser": {
+                "id": 1,
+                "name": "Veerandra Prasath",
+                "mail": "veerandra.prasath@solitontech.com",
+                "role": "Project Engineer",
+                "gender": "male"
+            },
+            "bookingMembers": [
+                {
+                    "userId": 1,
+                    "username": "Veerandra Prasath",
+                    "role": "Project Engineer",
+                    "gender": "male",
+                    "mail": "veerandra.prasath@solitontech.com",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z",
+                    "accommodation": {
+                        "apartment": {
+                            "id": 1,
+                            "name": "Apt1"
+                        },
+                        "flat": {
+                            "id": 1,
+                            "name": "F1"
+                        },
+                        "room": {
+                            "id": 1,
+                            "name": "R1"
+                        },
+                        "bed": {
+                            "id": 1,
+                            "name": "Bed 1"
+                        }
+                    }
+                }
+            ]
         }
-      }
-        }
-      ]
-    }
-  ]
+    ]
 }
 ```
-### Cancel Booking:
 
-Patch: /api/bookings/:requestId/cancel/:userId
+**Cancel User's Booking** :
+
+`Patch: /api/bookings/:requestId/cancel/user/:userId`
 
 Note:
 1.For individual booking, the request is cancelled.
@@ -231,10 +315,11 @@ Response :
 }
 ```
 
+---------
 
-### User Booking History
+### User Booking History Page
 
-**GET : http://localhost:5001/api/bookings/history/user/{userId}**
+**GET :/api/bookings/history/user/{userId}**
 
 Response :
 ```
@@ -279,6 +364,9 @@ Response :
   ]
 }
 ```
+
+
+
 ## Admin Module
 
 
