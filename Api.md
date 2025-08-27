@@ -321,6 +321,8 @@ Response :
 
 **GET :api/bookings/history/user/{userId}**
 
+- No filters for the user booking history
+
 Response :
 ```
 {
@@ -372,9 +374,12 @@ Response :
 
 ### GetBooking History
 
-**HTTP : http://localhost:5001/api/bookings/history?city=1&status=pending&checkIn=2025-07-30T02:35:00.000Z&checkOut=2025-07-30T12:40:00.000Z&role=project engineer**
+**Get: /api/bookings/history?city=1&checkIn=2025-08-25T17:35:00.000Z&checkOut=2025-08-30T18:40:00.000Z&role=project engineer&search=veera**
+
 
 - The response has all the user's history .Each request has it own status and every booking member of the request also have their individual status . 
+- Filters applied are city ,status,checkin and checkout,search ,role of the user.
+- Search by user name or email implemented.
 
 Response:
 
@@ -497,6 +502,7 @@ Response:
     ]
 }
 ```
+
 ### Get All pending Requests
 
 **GET : http://localhost:5001/api/requests**
@@ -508,45 +514,78 @@ Response:
     "success": true,
     "data": [
         {
-            "requestId": 2,
+            "requestId": 3,
             "city": "Madurai",
             "requestedBy": {
                 "userId": 1,
                 "name": "Veerandra Prasath",
-                "email": "veerandra.prasath@solitontech.com",
+                "email": "veerandra.prasath@gmail.com",
+                "role": "project engineer",
+                "gender": "male"
+            },
+            "status": "pending",
+            "bookingType": "team",
+            "requestedAt": "2025-08-27T10:08:09.245Z",
+            "bookingMembers": [
+                {
+                    "bookingMemberId": 4,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
+                    "gender": "male",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z"
+                },
+                {
+                    "bookingMemberId": 5,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
+                    "gender": "male",
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z"
+                }
+            ]
+        },
+        {
+            "requestId": 4,
+            "city": "Madurai",
+            "requestedBy": {
+                "userId": 1,
+                "name": "Veerandra Prasath",
+                "email": "veerandra.prasath@gmail.com",
                 "role": "project engineer",
                 "gender": "male"
             },
             "status": "pending",
             "bookingType": "individual",
-            "requestedAt": "2025-07-28T07:31:19.944Z",
+            "requestedAt": "2025-08-27T10:08:20.622Z",
             "bookingMembers": [
                 {
-                    "bookingMemberId": 3,
-                    "name": "Shri Ram",
-                    "email": "shriram.saravanan@solitontech.com",
+                    "bookingMemberId": 6,
+                    "name": "Veerandra Prasath",
+                    "email": "veerandra.prasath@gmail.com",
                     "gender": "male",
-                    "checkIn": "2025-07-30T03:30:00.000Z",
-                    "checkOut": "2025-07-30T12:30:00.000Z"
+                    "checkIn": "2025-08-26T03:30:00.000Z",
+                    "checkOut": "2025-08-26T12:30:00.000Z"
                 }
             ]
         }
     ]
 }
 ```
+
 ### Get availability by city (this is for the drop down)
 
 
 
-**POST : http://localhost:5001/api/availability/city/{cityId}**
+**POST : /api/availability/city/{cityId}**
 
 Body :
 ```JSON
 {
   "DATES": [
     {
-      "checkIn": "2023-08-01T14:00:00Z",
-      "checkOut": "2023-08-05T10:00:00Z"
+      "checkIn": "2025-08-25T14:00:00Z",
+      "checkOut": "2025-08-30T10:00:00Z"
     },
     {
       "checkIn": "2023-08-10T14:00:00Z",
@@ -562,8 +601,50 @@ Response:
     "cityName": "Madurai",
     "data": [
         {
-            "checkIn": "2025-08-30T09:00:00",
-            "checkOut": "2025-08-30T18:00:00",
+            "checkIn": "2025-08-25T14:00:00Z",
+            "checkOut": "2025-08-30T10:00:00Z",
+            "apartmentsStatus": [
+                {
+                    "id": 1,
+                    "name": "Apt1",
+                    "flats": [
+                        {
+                            "id": 1,
+                            "name": "F1",
+                            "isAvailable": false,
+                            "gender": "male",
+                            "rooms": [
+                                {
+                                    "id": 1,
+                                    "name": "R2",
+                                    "isAvailable": false,
+                                    "beds": [
+                                        {
+                                            "id": 1,
+                                            "name": "Bed 1",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Bed 2",
+                                            "isAvailable": true
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "Bed 3",
+                                            "isAvailable": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "checkIn": "2023-08-10T14:00:00Z",
+            "checkOut": "2023-08-15T10:00:00Z",
             "apartmentsStatus": [
                 {
                     "id": 1,
@@ -576,75 +657,23 @@ Response:
                             "gender": null,
                             "rooms": [
                                 {
-                                    "id": 3,
-                                    "name": "R1",
-                                    "isAvailable": true,
-                                    "beds": [
-                                        {
-                                            "id": 3,
-                                            "name": "Bed 1",
-                                            "isAvailable": true
-                                        },
-                                        {
-                                            "id": 4,
-                                            "name": "Bed 2",
-                                            "isAvailable": true
-                                        },
-                                        {
-                                            "id": 5,
-                                            "name": "Bed 3",
-                                            "isAvailable": true
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "id": 2,
-                            "name": "F2",
-                            "isAvailable": true,
-                            "gender": null,
-                            "rooms": [
-                                {
-                                    "id": 4,
-                                    "name": "R1",
-                                    "isAvailable": true,
-                                    "beds": [
-                                        {
-                                            "id": 6,
-                                            "name": "Bed 1",
-                                            "isAvailable": true
-                                        },
-                                        {
-                                            "id": 7,
-                                            "name": "Bed 2",
-                                            "isAvailable": true
-                                        },
-                                        {
-                                            "id": 8,
-                                            "name": "Bed 3",
-                                            "isAvailable": true
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": 5,
+                                    "id": 1,
                                     "name": "R2",
                                     "isAvailable": true,
                                     "beds": [
                                         {
-                                            "id": 9,
+                                            "id": 1,
                                             "name": "Bed 1",
                                             "isAvailable": true
                                         },
                                         {
-                                            "id": 10,
-                                            "name": "Bed 3",
+                                            "id": 2,
+                                            "name": "Bed 2",
                                             "isAvailable": true
                                         },
                                         {
-                                            "id": 11,
-                                            "name": "Bed 2",
+                                            "id": 3,
+                                            "name": "Bed 3",
                                             "isAvailable": true
                                         }
                                     ]
@@ -763,15 +792,17 @@ Response :
 
 ```JSON
 {
-  "success": true,
-  "message": "Request rejected successfully",
-  "data": {
-    "requestId": 456,
-    "processedAt": "2023-08-15T15:22:10Z",
-    "remarks": "Rejected due to insufficient availability"
-  }
+    "success": true,
+    "message": "Request rejected successfully",
+    "data": {
+        "requestId": 6,
+        "processedAt": "2025-08-27T12:46:52.524Z",
+        "remarks": "No availability for requested dates.",
+        "bookingType": "individual"
+    }
 }
 ```
+
 ### Get Occupancy 
 
 Post:/api/occupancy?city=1&apartment=1
@@ -786,129 +817,357 @@ Body :
 
 ```
 
-Response : 
+Response 1:
+
+
+If entire flat is occupied by a person ,the response will be like the below one 
+
+
 
 ```json
 {
     "success": true,
     "data": {
         "period": {
-            "checkInTime": "2025-07-30T09:00:00Z",
-            "checkOutTime": "2025-07-30T18:00:00Z"
+            "checkIn": "2025-08-25T09:00:00Z",
+            "checkOut": "2025-08-30T18:00:00Z"
         },
-        "filtersApplied": {
+        "filters": {
             "city": "1",
             "apartment": "1",
             "status": "all"
         },
-        "stats": {
-            "totalBeds": 3,
-            "occupied": 2,
-            "vacant": 1,
-            "filteredBeds": 3
+        "statistics": {
+            "totalBeds": 6,
+            "occupiedBeds": 6,
+            "vacantBeds": 0,
+            "occupancyRate": "100.00%"
         },
-        "beds": [
+        "hierarchy": [
             {
-                "bed": {
-                    "id": 3,
-                    "name": "Bed 1",
-                    "status": "occupied",
-                    "occupiedBy": {
-                        "user": {
-                            "id": 2,
-                            "name": "Shri Ram",
-                            "email": "shriram.saravanan@solitontech.com",
-                            "role": "project engineer",
-                            "gender": "male"
-                        },
-                        "period": {
-                            "checkInTime": "2025-07-30T09:00:00",
-                            "checkOutTime": "2025-07-30T18:00:00"
-                        }
+                "id": 1,
+                "name": "Madurai",
+                "apartments": [
+                    {
+                        "id": 1,
+                        "name": "Apt1",
+                        "flats": [
+                            {
+                                "id": 1,
+                                "name": "F1",
+                                "rooms": [
+                                    {
+                                        "id": 1,
+                                        "name": "R2",
+                                        "beds": [
+                                            {
+                                                "id": 1,
+                                                "name": "Bed 1",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 2,
+                                                "name": "Bed 2",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 3,
+                                                "name": "Bed 3",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "occupied",
+                                        "occupiedBy": null
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "R1",
+                                        "beds": [
+                                            {
+                                                "id": 4,
+                                                "name": "Bed 1",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 5,
+                                                "name": "Bed 2",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 6,
+                                                "name": "Bed 3",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "occupied",
+                                        "occupiedBy": null
+                                    }
+                                ],
+                                "status": "occupied",
+                                "occupiedBy": {
+                                    "user": {
+                                        "id": 1,
+                                        "name": "Veerandra Prasath",
+                                        "email": "veerandra.prasath@gmail.com",
+                                        "role": "project engineer",
+                                        "gender": "male"
+                                    },
+                                    "period": {
+                                        "checkIn": "2025-08-26T03:30:00.000Z",
+                                        "checkOut": "2025-08-26T12:30:00.000Z"
+                                    },
+                                    "assignedLevel": "flat"
+                                }
+                            }
+                        ],
+                        "status": "vacant",
+                        "occupiedBy": null
                     }
-                },
-                "location": {
-                    "room": {
-                        "id": 3,
-                        "name": "R1"
-                    },
-                    "flat": {
-                        "id": 1,
-                        "name": "F1"
-                    },
-                    "apartment": {
-                        "id": 1,
-                        "name": "Apt1"
-                    },
-                    "city": {
-                        "id": 1,
-                        "name": "Madurai"
-                    }
-                }
-            },
+                ],
+                "status": "vacant",
+                "occupiedBy": null
+            }
+        ]
+    }
+}
+```
+
+Response 2:
+
+If the entire room is allocated to a person means,the respone will  be like the below one 
+
+```
+{
+    "success": true,
+    "data": {
+        "period": {
+            "checkIn": "2025-08-25T09:00:00Z",
+            "checkOut": "2025-08-30T18:00:00Z"
+        },
+        "filters": {
+            "city": "1",
+            "apartment": "1",
+            "status": "all"
+        },
+        "statistics": {
+            "totalBeds": 6,
+            "occupiedBeds": 3,
+            "vacantBeds": 3,
+            "occupancyRate": "50.00%"
+        },
+        "hierarchy": [
             {
-                "bed": {
-                    "id": 4,
-                    "name": "Bed 2",
-                    "status": "vacant",
-                    "occupiedBy": null
-                },
-                "location": {
-                    "room": {
-                        "id": 3,
-                        "name": "R1"
-                    },
-                    "flat": {
+                "id": 1,
+                "name": "Madurai",
+                "apartments": [
+                    {
                         "id": 1,
-                        "name": "F1"
-                    },
-                    "apartment": {
-                        "id": 1,
-                        "name": "Apt1"
-                    },
-                    "city": {
-                        "id": 1,
-                        "name": "Madurai"
+                        "name": "Apt1",
+                        "flats": [
+                            {
+                                "id": 1,
+                                "name": "F1",
+                                "rooms": [
+                                    {
+                                        "id": 1,
+                                        "name": "R2",
+                                        "beds": [
+                                            {
+                                                "id": 1,
+                                                "name": "Bed 1",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 2,
+                                                "name": "Bed 2",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 3,
+                                                "name": "Bed 3",
+                                                "status": "occupied",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "occupied",
+                                        "occupiedBy": {
+                                            "user": {
+                                                "id": 1,
+                                                "name": "Veerandra Prasath",
+                                                "email": "veerandra.prasath@gmail.com",
+                                                "role": "project engineer",
+                                                "gender": "male"
+                                            },
+                                            "period": {
+                                                "checkIn": "2025-08-26T03:30:00.000Z",
+                                                "checkOut": "2025-08-26T12:30:00.000Z"
+                                            },
+                                            "assignedLevel": "room"
+                                        }
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "R1",
+                                        "beds": [
+                                            {
+                                                "id": 4,
+                                                "name": "Bed 1",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 5,
+                                                "name": "Bed 2",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 6,
+                                                "name": "Bed 3",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "vacant",
+                                        "occupiedBy": null
+                                    }
+                                ],
+                                "status": "vacant",
+                                "occupiedBy": null
+                            }
+                        ],
+                        "status": "vacant",
+                        "occupiedBy": null
                     }
-                }
-            },
+                ],
+                "status": "vacant",
+                "occupiedBy": null
+            }
+        ]
+    }
+}
+```
+
+Response 3:
+
+If a bed is assigned to a person means ,the response will be like the below 
+
+```
+{
+    "success": true,
+    "data": {
+        "period": {
+            "checkIn": "2025-08-25T09:00:00Z",
+            "checkOut": "2025-08-30T18:00:00Z"
+        },
+        "filters": {
+            "city": "1",
+            "apartment": "1",
+            "status": "all"
+        },
+        "statistics": {
+            "totalBeds": 6,
+            "occupiedBeds": 1,
+            "vacantBeds": 5,
+            "occupancyRate": "16.67%"
+        },
+        "hierarchy": [
             {
-                "bed": {
-                    "id": 6,
-                    "name": "Bed 1",
-                    "status": "occupied",
-                    "occupiedBy": {
-                        "user": {
-                            "id": 3,
-                            "name": "shruthi",
-                            "email": "shruthi.akka@solitontech.com",
-                            "role": "senior project engineer",
-                            "gender": "female"
-                        },
-                        "period": {
-                            "checkInTime": "2025-07-30T09:00:00",
-                            "checkOutTime": "2025-07-30T18:00:00"
-                        }
-                    }
-                },
-                "location": {
-                    "room": {
-                        "id": 4,
-                        "name": "R1"
-                    },
-                    "flat": {
-                        "id": 2,
-                        "name": "F2"
-                    },
-                    "apartment": {
+                "id": 1,
+                "name": "Madurai",
+                "apartments": [
+                    {
                         "id": 1,
-                        "name": "Apt1"
-                    },
-                    "city": {
-                        "id": 1,
-                        "name": "Madurai"
+                        "name": "Apt1",
+                        "flats": [
+                            {
+                                "id": 1,
+                                "name": "F1",
+                                "rooms": [
+                                    {
+                                        "id": 1,
+                                        "name": "R2",
+                                        "beds": [
+                                            {
+                                                "id": 1,
+                                                "name": "Bed 1",
+                                                "status": "occupied",
+                                                "occupiedBy": {
+                                                    "user": {
+                                                        "id": 1,
+                                                        "name": "Veerandra Prasath",
+                                                        "email": "veerandra.prasath@gmail.com",
+                                                        "role": "project engineer",
+                                                        "gender": "male"
+                                                    },
+                                                    "period": {
+                                                        "checkIn": "2025-08-26T03:30:00.000Z",
+                                                        "checkOut": "2025-08-26T12:30:00.000Z"
+                                                    },
+                                                    "assignedLevel": "bed"
+                                                }
+                                            },
+                                            {
+                                                "id": 2,
+                                                "name": "Bed 2",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 3,
+                                                "name": "Bed 3",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "vacant",
+                                        "occupiedBy": null
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "R1",
+                                        "beds": [
+                                            {
+                                                "id": 4,
+                                                "name": "Bed 1",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 5,
+                                                "name": "Bed 2",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            },
+                                            {
+                                                "id": 6,
+                                                "name": "Bed 3",
+                                                "status": "vacant",
+                                                "occupiedBy": null
+                                            }
+                                        ],
+                                        "status": "vacant",
+                                        "occupiedBy": null
+                                    }
+                                ],
+                                "status": "vacant",
+                                "occupiedBy": null
+                            }
+                        ],
+                        "status": "vacant",
+                        "occupiedBy": null
                     }
-                }
+                ],
+                "status": "vacant",
+                "occupiedBy": null
             }
         ]
     }
