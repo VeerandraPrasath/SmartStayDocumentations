@@ -67,6 +67,23 @@ Team Booking :
 
 ```
 
+Incorrect request response :
+
+```
+{
+    "success": false,
+    "error": "User 1 already has a pending request for the same time period"
+}
+```
+
+```
+{
+    "success": false,
+    "error": "User 1 already has an active or upcoming accommodation during the requested time period"
+}
+
+```
+
 **Get Availability**
 
 This get availability return the available number of beds for the requested time period which the count is reduced from the number of booking members requested previously for the same overlapping time period.
