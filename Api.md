@@ -1765,10 +1765,9 @@ Body :
   "cityData": { "name": "New York" },
   "apartmentData": { "name": "Sky Tower", "google_map_link": "https://maps.example.com/skytower" },
   "flatData": { "name": "Floor 5" },
-  "roomData": { "name": "Room 501" },
-  "bedsData": [
-    { "name": "Bed A" },
-    { "name": "Bed B" }
+  "roomData": [
+    { "name": "Room 501", "bedCount": 2 },
+    { "name": "Room 502", "bedCount": 1 }
   ]
 }
 ```
@@ -1779,21 +1778,42 @@ Response :
     "message": "Accommodation hierarchy created successfully",
     "data": {
         "cityId": 2,
-        "apartmentId": 2,
-        "flatId": 2,
-        "roomId": 3,
-        "beds": [
+        "apartmentId": 12,
+        "flatId": 16,
+        "rooms": [
             {
-                "id": 7,
-                "name": "Bed A",
-                "room_id": 3
+                "id": 35,
+                "name": "Room 501",
+                "flat_id": 16,
+                "bedCount": 2,
+                "beds": [
+                    {
+                        "id": 66,
+                        "name": "Bed 1",
+                        "room_id": 35
+                    },
+                    {
+                        "id": 67,
+                        "name": "Bed 2",
+                        "room_id": 35
+                    }
+                ]
             },
             {
-                "id": 8,
-                "name": "Bed B",
-                "room_id": 3
+                "id": 36,
+                "name": "Room 502",
+                "flat_id": 16,
+                "bedCount": 1,
+                "beds": [
+                    {
+                        "id": 68,
+                        "name": "Bed 1",
+                        "room_id": 36
+                    }
+                ]
             }
-        ]
+        ],
+        "totalBeds": 3
     }
 }
 ```
@@ -1804,11 +1824,11 @@ Body
 
 ```
 {
-  "apartmentData": { "name": "Ocean View", "city_id": 2 },
-  "flatData": { "name": "Ground Floor" },
-  "roomData": { "name": "Room 101" },
-  "bedsData": [
-    { "name": "Single Bed" }
+  "apartmentData": { "name": "Sky Tower", "google_map_link": "https://maps.example.com/skytower","city_id": 2 },
+  "flatData": { "name": "Floor 5" },
+  "roomData": [
+    { "name": "Room 501", "bedCount": 2 },
+    { "name": "Room 502", "bedCount": 1 }
   ]
 }
 ```
@@ -1818,16 +1838,43 @@ Response
     "success": true,
     "message": "Accommodation hierarchy created successfully",
     "data": {
-        "apartmentId": 3,
-        "flatId": 3,
-        "roomId": 4,
-        "beds": [
+        "cityId": null,
+        "apartmentId": 13,
+        "flatId": 17,
+        "rooms": [
             {
-                "id": 9,
-                "name": "Single Bed",
-                "room_id": 4
+                "id": 37,
+                "name": "Room 501",
+                "flat_id": 17,
+                "bedCount": 2,
+                "beds": [
+                    {
+                        "id": 69,
+                        "name": "Bed 1",
+                        "room_id": 37
+                    },
+                    {
+                        "id": 70,
+                        "name": "Bed 2",
+                        "room_id": 37
+                    }
+                ]
+            },
+            {
+                "id": 38,
+                "name": "Room 502",
+                "flat_id": 17,
+                "bedCount": 1,
+                "beds": [
+                    {
+                        "id": 71,
+                        "name": "Bed 1",
+                        "room_id": 38
+                    }
+                ]
             }
-        ]
+        ],
+        "totalBeds": 3
     }
 }
 ```
@@ -1837,11 +1884,10 @@ Response
 Body
 ```
 {
-  "flatData": { "name": "First Floor", "apartment_id": 3 },
-  "roomData": { "name": "Room 102" },
-  "bedsData": [
-    { "name": "Bed 1" },
-    { "name": "Bed 2" }
+  
+  "flatData": { "name": "Floor 5","apartment_id": 3 },
+  "roomData": [
+    { "name": "Room 501", "bedCount": 2 }
   ]
 }
 ```
@@ -1851,20 +1897,30 @@ Response
     "success": true,
     "message": "Accommodation hierarchy created successfully",
     "data": {
-        "flatId": 4,
-        "roomId": 5,
-        "beds": [
+        "cityId": null,
+        "apartmentId": null,
+        "flatId": 18,
+        "rooms": [
             {
-                "id": 10,
-                "name": "Bed 1",
-                "room_id": 5
-            },
-            {
-                "id": 11,
-                "name": "Bed 2",
-                "room_id": 5
+                "id": 39,
+                "name": "Room 501",
+                "flat_id": 18,
+                "bedCount": 2,
+                "beds": [
+                    {
+                        "id": 72,
+                        "name": "Bed 1",
+                        "room_id": 39
+                    },
+                    {
+                        "id": 73,
+                        "name": "Bed 2",
+                        "room_id": 39
+                    }
+                ]
             }
-        ]
+        ],
+        "totalBeds": 2
     }
 }
 ```
@@ -1874,9 +1930,8 @@ Response
 Body
 ```
 {
-  "roomData": { "name": "Suite Room", "flat_id": 4},
-  "bedsData": [
-    { "name": "King Bed" }
+  "roomData": [
+    { "name": "Room 501", "bedCount": 2 ,"flat_id":9}
   ]
 }
 ```
@@ -1887,51 +1942,180 @@ Response
     "success": true,
     "message": "Accommodation hierarchy created successfully",
     "data": {
-        "roomId": 6,
-        "beds": [
+        "cityId": null,
+        "apartmentId": null,
+        "flatId": null,
+        "rooms": [
             {
-                "id": 12,
-                "name": "King Bed",
-                "room_id": 6
+                "id": 40,
+                "name": "Room 501",
+                "flat_id": 9,
+                "bedCount": 2,
+                "beds": [
+                    {
+                        "id": 74,
+                        "name": "Bed 1",
+                        "room_id": 40
+                    },
+                    {
+                        "id": 75,
+                        "name": "Bed 2",
+                        "room_id": 40
+                    }
+                ]
             }
-        ]
+        ],
+        "totalBeds": 2
     }
 }
 ```
 
-**Create from the bed level**
-Body
+**Create city Alone**
+
+Request:
+
 ```
 {
-  "bedsData": [
-    { "name": "Extra Bed 1", "room_id": 6 },
-    { "name": "Extra Bed 2", "room_id": 6 }
-  ]
-}
+  "cityData": { "name": "New York" }
+  }
 ```
-Response
+
+Response:
 ```
 {
     "success": true,
     "message": "Accommodation hierarchy created successfully",
     "data": {
-        "beds": [
-            {
-                "id": 13,
-                "name": "Extra Bed 1",
-                "room_id": 6
-            },
-            {
-                "id": 14,
-                "name": "Extra Bed 2",
-                "room_id": 6
-            }
-        ]
+        "cityId": 2,
+        "apartmentId": null,
+        "flatId": null,
+        "rooms": [],
+        "totalBeds": 0
     }
 }
-
 ```
 
+**Create apartment Alone**
+
+Request:
+
+```
+{
+ "apartmentData": { "name": "Sky Tower", "google_map_link": "https://maps.example.com/skytower" ,"city_id": 2}
+}
+```
+
+Response:
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "cityId": null,
+        "apartmentId": 14,
+        "flatId": null,
+        "rooms": [],
+        "totalBeds": 0
+    }
+}
+```
+
+**Create flat Alone**
+
+Request:
+
+```
+{
+  "flatData": { "name": "Floor 5" ,"apartment_id": 3}
+}
+```
+
+Response:
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "cityId": null,
+        "apartmentId": null,
+        "flatId": 19,
+        "rooms": [],
+        "totalBeds": 0
+    }
+}
+```
+
+**Create flats and rooms Alone**
+
+Request:
+
+```
+{  "roomData": [
+    { "name": "Room 501", "bedCount": 1,"flat_id":9 }
+  ]
+}
+```
+
+Response:
+```
+{
+    "success": true,
+    "message": "Accommodation hierarchy created successfully",
+    "data": {
+        "cityId": null,
+        "apartmentId": null,
+        "flatId": null,
+        "rooms": [
+            {
+                "id": 41,
+                "name": "Room 501",
+                "flat_id": 9,
+                "bedCount": 1,
+                "beds": [
+                    {
+                        "id": 76,
+                        "name": "Bed 1",
+                        "room_id": 41
+                    }
+                ]
+            }
+        ],
+        "totalBeds": 1
+    }
+}
+```
+
+
+
+**Get all cities**
+
+`GET : /api/cities`
+
+Response :
+
+```
+[
+    {
+        "id": 2,
+        "name": "New York"
+    }
+]
+```
+
+**Get city By Id**
+
+`GET : /api/cities/{cityId}`
+
+Response :
+```
+{
+    "success": true,
+    "data": {
+        "id": 2,
+        "name": "New York"
+    }
+}
+```
 
 
 **Create City:**
@@ -1953,6 +2137,41 @@ Response :
         "id": 1,
         "name": "Madurai"
     }
+}
+```
+
+**Edit City**
+
+`Put : /api/cities/{cityId}`
+
+Body :
+
+```
+{
+  "name":"City name changed"
+}
+```
+
+Response :
+```
+{
+    "success": true,
+    "city": {
+        "id": 1,
+        "name": "City name changed"
+    }
+}
+```
+
+
+**Delete City**
+
+`Delete : /api/cities/{cityId}`
+
+Response :
+```
+{
+    "success": true
 }
 ```
 
@@ -1984,6 +2203,85 @@ Response :
 }
 ```
 
+
+**Get Apartment By City Id**
+
+`GET : /api/apartments/city/{cityId}`
+
+Response :
+```
+{
+    "success": true,
+    "data": {
+        "city": {
+            "id": 2,
+            "name": "New York"
+        },
+        "apartments": [
+            {
+                "id": 3,
+                "name": "Ocean View",
+                "googleMapLink": null,
+                "statistics": {
+                    "flats": 2,
+                    "rooms": 3,
+                    "beds": 6
+                }
+            }
+        ]
+    }
+}
+```
+
+**Get apartment By ID**
+
+`Get : /api/apartments/{apartmentId}`
+
+Response :
+```
+{
+    "id": 3,
+    "name": "Ocean View",
+    "city_id": 2,
+    "google_map_link": null
+}
+```
+
+**Edit apartment details**
+
+`Put : /api/apartments/{apartmentId}`
+Body :
+```
+{
+  "name":"Apartment name changed",
+  "googleMapLink":"Opposite to maran barota kadai"
+}
+```
+
+Response :
+
+```
+{
+    "success": true,
+    "apartment": {
+        "id": 2,
+        "name": "Apartment name changed",
+        "google_map_link": "Opposite to maran barota kadai"
+    }
+}
+```
+
+**Delete Apartment**
+
+`Delete : /api/apartments/{apartmentId}`
+
+Response :
+```
+{
+    "success": true
+}
+```
+
 **Create Flat:**
 
 **Post : /api/flats**
@@ -2006,6 +2304,40 @@ Response :
 }
 ```
 
+**Delete Flat**
+
+`Delete /api/flats/{flatId}`
+
+Response :
+```
+{
+    "success": true
+}
+```
+
+**Edit Flat**
+
+`Put : /api/flats/{flatId}`
+
+Body :
+```
+{ "name": "Flat name updated" }
+```
+
+Response :
+```
+{
+    "success": true,
+    "flat": {
+        "id": 10,
+        "name": "Flat name updated",
+        "apartment_id": 8
+    }
+}
+```
+
+
+
 **Create Room:**
 
 **POST : /api/rooms**
@@ -2026,6 +2358,73 @@ Response :
         "flat_id": 1,
         "beds": 3
     }
+}
+```
+
+
+**Edit Room**
+`patch : /api/rooms/{roomId}`
+
+
+There are already 4 beds in this room. Now we are updating the bed count to 1. So, 3 beds will be removed automatically.
+Body :
+```
+{ "name": "Room name updated", "beds": 1 }
+```
+Response :
+```
+{
+    "success": true,
+    "message": "Room updated successfully",
+    "data": {
+        "room": {
+            "id": 39,
+            "name": "Deluxe Room",
+            "flat_id": 18
+        },
+        "previousBedCount": 4,
+        "newBedCount": 1,
+        "bedOperations": [
+            {
+                "operation": "removed",
+                "bed": {
+                    "id": 73,
+                    "name": "Bed 2"
+                }
+            },
+            {
+                "operation": "removed",
+                "bed": {
+                    "id": 77,
+                    "name": "Bed 3"
+                }
+            },
+            {
+                "operation": "removed",
+                "bed": {
+                    "id": 78,
+                    "name": "Bed 4"
+                }
+            }
+        ],
+        "beds": [
+            {
+                "id": 72,
+                "name": "Bed 1"
+            }
+        ]
+    }
+}
+```
+
+**Delete Room**
+
+`Delete : /api/rooms/{roomId}`
+
+Response :
+```
+{
+    "success": true
 }
 ```
 
