@@ -2432,3 +2432,34 @@ Response :
 Note : 
 
 This room creating request will also create the number of beds mentioned in the request.
+
+
+
+### Export endpoints 
+
+**Export Occupancy Report**
+
+`Post : api/occupancy/export?city=1&apartment=5&status=occupied`
+
+Body :
+```json
+{
+      "checkIn": "2025-07-30T09:00:00Z",
+      "checkOut": "2025-07-30T18:00:00Z"
+}
+```
+
+Response :
+
+It will download excel file with the occupancy details.
+
+**Export Booking History**
+
+
+`Get : /api/bookings/history/export?city=1&checkIn=2025-08-25T17:35:00.000Z&checkOut=2025-08-30T18:40:00.000Z&role=project engineer&search=veera`
+
+Response :
+
+It will download the excel file with the booking history details.
+
+
