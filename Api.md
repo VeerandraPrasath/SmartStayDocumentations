@@ -119,38 +119,40 @@ Response :
 
 Individual Booking:
 ```JSON
-{
-  "requesterId": 1,
-  "cityId": 1,
-  "bookingType": "individual",
-  "BookingMembers": [
+
     {
-      "userId": 1,
-      "checkInTime": "2025-07-30T09:00:00",
-      "checkOutTime": "2025-07-30T18:00:00"
+      "requesterId":1,
+      "bookingType":"individual",
+      "cityId":2,
+      "BookingMembers":[{
+      "memberUserId":1, 
+      "checkInTime": "2025-10-26T08:30:00",
+      "checkOutTime": "2025-10-27T18:50:00"
+      }
+    ]
     }
-  ]
-}
+
 ```
 Team Booking :
 ```
-{
-  "requesterId": 1,
-  "cityId": 1,
-  "bookingType": "team",
-  "BookingMembers": [
+
     {
-      "userId": 1,
-      "checkInTime": "2025-07-30T09:00:00",
-      "checkOutTime": "2025-07-30T18:00:00"
-    },
-     {
-      "userId": 1,
-      "checkInTime": "2025-07-30T09:00:00",
-      "checkOutTime": "2025-07-30T15:00:00"
+      "requesterId":1,
+      "bookingType":"team",
+      "cityId":2,
+      "BookingMembers":[{
+      "memberUserId":1, 
+      "checkInTime": "2025-10-26T08:30:00",
+      "checkOutTime": "2025-10-27T18:50:00"
+      },
+      {
+      "memberUserId":1, 
+      "checkInTime": "2025-10-26T08:30:00",
+      "checkOutTime": "2025-10-27T18:50:00"
+      }
+    ]
     }
-  ]
-}
+
 
 ```
 
@@ -303,7 +305,7 @@ Response :
 
 **Cancel Request (Remove the particular user from the request)**
 
-`Patch : /api/requests/{requestId}/cancel/{userId}`
+`Patch : /api/requests/{requestId}/user/{userId}`
 
 Response 1:(If he is one of the member in the request)
 ```
