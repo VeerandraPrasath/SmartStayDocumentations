@@ -2462,4 +2462,10 @@ Response :
 
 It will download the excel file with the booking history details.
 
+**Export all  accommodation resources**
 
+`GET /api/accommodation/export?city=1&apartment=5&flat=10&room=10&bed=20`
+
+
+Response :
+It will download the excel file with the accommodation hierarchy details.
