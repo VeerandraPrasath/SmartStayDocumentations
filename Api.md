@@ -2284,6 +2284,39 @@ Response :
 }
 ```
 
+
+**Get Flats By Apartment ID**
+
+`Get api/flats/apartment/{apartmentId}`
+
+Response :
+```json
+{
+  "success": true,
+  "data": {
+    "apartment": {
+      "id": 1,
+      "name": "HappStay"
+    },
+    "city": {
+      "id": 1,
+      "name": "Madurai"
+    },
+    "flats": [
+      {
+        "id": 1,
+        "name": "A1",
+        "status": "available",
+        "statistics": {
+          "rooms": 2,
+          "beds": 6
+        }
+      }
+    ]
+  }
+}
+```
+
 **Create Flat:**
 
 **Post : /api/flats**
@@ -2335,6 +2368,46 @@ Response :
         "name": "Flat name updated",
         "apartment_id": 8
     }
+}
+```
+
+
+**GetRoomsByFlatId**
+`Get : /api/rooms/flat/{flatId}`
+
+Response:
+```json
+{
+  "success": true,
+  "data": {
+    "flat": {
+      "id": 1,
+      "name": "A1",
+      "apartment": {
+        "id": 1,
+        "name": "HappStay",
+        "city": {
+          "id": 1,
+          "name": "Madurai"
+        }
+      }
+    },
+    "rooms": [
+      {
+        "id": 1,
+        "name": "Room 1",
+        "statistics": {
+          "beds": 3
+        },
+        "beds": [
+          {
+            "id": 1,
+            "name": "Bed 1"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
